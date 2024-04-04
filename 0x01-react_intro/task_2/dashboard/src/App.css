@@ -1,0 +1,63 @@
+
+:root{
+    --color-primary: red;
+
+    --font-xx-large: 3rem;
+    --font-x-small: 2rem;
+
+    --body-padding: 4rem;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    /* color: var(--color-primary); */
+    height: 45vh;
+    font-family:  monospace;
+}
+
+/* Header  
+    ===================*/
+
+.App-header{
+    display: flex;
+    align-items: center;
+    border-bottom: 0.5rem solid red;
+
+
+}
+.App-header h1{
+    font-size: var(--font-xx-large);
+}
+
+/* Body 
+    ===================*/
+
+.App-body {
+    padding: var(--body-padding);
+}
+
+
+.App-body p{
+    color: black;
+    font-size: var(--font-x-small);
+}
+
+/* Footer
+    =============================*/
+.App-footer{
+    text-align: center;
+    color: black;
+    position: absolute;
+    bottom: 0;
+    /* background-color: red; */
+    width: 100%;
+    border-top: 0.5rem solid red;
+    font-size: var(--font-x-small);
+    font-style: italic;
+
+}
+label{
+    font-weight: bold;
+    font-size: var(--font-x-small);
+}
