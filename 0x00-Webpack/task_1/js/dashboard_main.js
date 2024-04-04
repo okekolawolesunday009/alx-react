@@ -16,7 +16,7 @@ function updateCounter(){
 	$(button).on('click', _.debounce(function() {
 		count.innerHTML = `${++num} clicks on the button`
 		
-	}, 300));
+	}, 500));
 }
 
 updateCounter();
