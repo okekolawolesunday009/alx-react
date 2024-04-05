@@ -9,7 +9,7 @@ function App() {
      
       <div className="App-header">
         <div>
-          <img src={logo} alt='holbeton-logo' width={300} height={300}/>
+          <img src={logo} alt='holbeton_logo' width={300} height={300}/>
 
         </div>
         <h1>School dashboard</h1>
@@ -20,11 +20,11 @@ function App() {
 
         <form>
       
-        <label for="email">Email:</label>
+        <label htmlFor="email">Email:</label>
         <input type='email' name='email' id="email"/>
 
        
-        <label for="email">Password:</label>
+        <label htmlFor="email">Password:</label>
         <input type='password' name='password' id="password"/>
 
         <button>OK</button>
