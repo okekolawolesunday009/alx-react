@@ -19,6 +19,7 @@ html{
 body{
     margin: 0;
     padding: 0;
+    width: 100%;
     /* color: var(--color-primary); */
     font-family:  monospace;
     position: relative;
@@ -84,5 +85,23 @@ label{
         html{
             font-size: 47%;
         }
+
+        img{
+            width: 10rem;
+            height: 10rem;
+        }
         
+        form{
+            flex-direction: column;
+        }
+
+        .App{
+            height: 100%;
+            
+        }
+
+        .App-footer{
+            height: 1%;
+           
+        }
     }
