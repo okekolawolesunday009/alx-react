@@ -1,0 +1,31 @@
+
+:root{
+    --color-primary: red;
+
+    --font-xx-large: 3rem;
+    --font-x-small: 2rem;
+
+    --body-padding: 4rem;
+}
+
+html{
+    font-size: 67%;
+}
+
+
+body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    /* color: var(--color-primary); */
+    font-family:  monospace;
+    position: relative;
+
+}
+
+
+@media screen and (max-width: 767px) {
+    html{
+        font-size: 47%;
+    }
+}

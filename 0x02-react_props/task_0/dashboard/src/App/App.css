@@ -1,0 +1,45 @@
+@import url('../index.css');
+
+.App{
+    height: 100vh;
+    
+}
+
+
+
+/* Body 
+    ===================*/
+
+.App-body {
+    padding: var(--body-padding);
+    height: 45%
+}
+
+
+.App-body p{
+    color: black;
+    font-size: var(--font-x-small);
+}
+
+
+
+
+
+    @media screen and (max-width: 767px) {
+        html{
+            font-size: 47%;
+        }
+
+        img{
+            width: 10rem;
+            height: 10rem;
+        }
+        
+      
+
+        .App{
+            height: 100%;
+            
+        }
+
+    }

@@ -1,0 +1,26 @@
+@import url('../index.css');
+
+label{
+    font-weight: bold;
+    font-size: var(--font-x-small);
+}
+
+/* From
+    ===================*/
+
+    form{
+        display: flex;
+        width: 60%;
+        gap:2rem;
+    }
+
+
+    
+
+    @media screen and (max-width: 767px) {
+     
+        
+        form{
+            flex-direction: column;
+        }
+    }
