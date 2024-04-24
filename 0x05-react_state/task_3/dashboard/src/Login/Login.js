@@ -29,7 +29,7 @@ export default function Login({login}) {
         setEnableSubmit(false);
       }
     }
-  }, [email, password]);
+  }, [email, password, enableSubmit]);
 
 
 

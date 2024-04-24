@@ -1,16 +1,11 @@
 import React from 'react'
 import logo from "../Assets/holberton-logo.jpg"
 import { StyleSheet, css } from 'aphrodite'
-import { useEffect } from 'react'
 import { useContext } from 'react'
 import { AppContext } from '../App/AppContext'
 
 export default function Header() {
-
-
   const {user, logOut} = useContext(AppContext)
-
-
 
   return (
     <div className={css(styles.Appheader)}>

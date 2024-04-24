@@ -1,8 +1,12 @@
 import React from 'react'
 import logo from "../Assets/holberton-logo.jpg"
 import { StyleSheet, css } from 'aphrodite'
+import { useContext } from 'react'
+import { AppContext } from '../App/AppContext'
 
 export default function Header() {
+  const {user, logOut} = useContext(AppContext)
+
   return (
     <div className={css(styles.Appheader)}>
         <div>
@@ -10,6 +14,14 @@ export default function Header() {
 
         </div>
         <h1 className={css(styles.h1)}>School dashboard</h1>
+        {user && user.isLoggedIn === true ?
+         (
+         <p>Welcome {user.email}
+          <span
+           onClick={() => logOut()}>
+            logout
+           </span>
+          </p>) :""}
     </div>
       
   )

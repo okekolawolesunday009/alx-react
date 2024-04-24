@@ -10,42 +10,91 @@ import { getLatestNotification } from '../Utils/utils';
 import BodySectionWithMarginBottom from '../BodySection/BodySectionWithMarginBottom';
 import BodySection from '../BodySection/BodySection';
 import { StyleSheet, css } from 'aphrodite';
+import {AppContext, user } from './AppContext';
 
 
 export class App extends Component {
 
+ 
+
   constructor(props) {
     super(props); 
       this.state = {
-        displayDrawer : true
-      }
+        displayDrawer : false,
+        user: user,
+        logOut: this.logOut,
+        listNotifications : [
+          {
+            id:1,
+            type: "default",
+            value:"New course available"
+          },
+          {
+            id:2,
+            type: "urgent",
+            value:"New resume available"
+          },
+          {
+            id:3,
+            type: "urgent",
+            html: getLatestNotification()
+          }
+        ]
+        
+      };
+ 
     this.handleDisplayDrawer = this.handleDisplayDrawer.bind(this);
     this.handleHideDrawer = this.handleHideDrawer.bind(this);
+    this.markNotificationAsRead = this.markNotificationAsRead.bind(this);
+    this.login = this.logIn.bind(this);
+    this.logOut = this.logOut.bind(this)
 
   }
+  logOut() {
+    this.setState({
+      user: user
+    });
+  }
+
+  logIn = (email, password) => {
+    this.setState({
+      user: {
+        email: email,
+        password: password,
+        isLoggedIn: true,
+      }
+    });
+  };
+  markNotificationAsRead = (id) => {
+    this.setState(prevState => ({
+      listNotifications: prevState.listNotifications.filter(notification => notification.id !== id)
+    }));
+  };
+  
   
   handleDisplayDrawer = () => {
     this.setState({displayDrawer: true})
+    
   };
 
   handleHideDrawer = () => {
     this.setState({displayDrawer: false})
   };
-        handleKeyDown (e) {
-        if (e.ctrlKey && e.key === 'h') {
-            alert("Logging you out");
-            this.props.logOut();
-        };
-      };
-      componentDidMount(){
-        window.addEventListener('keydown', this.handleKeyDown);
-      }
-    
-      componentWillUnmount(){
-        window.removeEventListener('keydown', this.handleKeyDown);
-      }
+  
+  handleKeyDown (e) {
+    if (e.ctrlKey && e.key === 'h') {
+        alert("Logging you out");
+        this.props.logOut();
+    };
+  };
+  componentDidMount(){
+    window.addEventListener('keydown', this.handleKeyDown);
+  }
+
+  componentWillUnmount(){
+    window.removeEventListener('keydown', this.handleKeyDown);
+  }
           
-   isLogin = true;
    listCourses = [
     {
       id: 1, 
@@ -66,43 +115,31 @@ export class App extends Component {
     }
   ];
   
-  listNotifications = [
-    {
-      id:1,
-      type: "default",
-      value:"New course available"
-    },
-    {
-      id:2,
-      type: "urgent",
-      value:"New resume available"
-    },
-    {
-      id:3,
-      type: "urgent",
-      html: getLatestNotification()
-    }
-  ]
+ 
   render() {
 
-
-  
     return (
+      <>
+      <AppContext.Provider value={{ 
+          user: this.state.user,
+          logOut: this.state.logOut,}}>
+
       <div className={css(styles.App, styles.smallHtml)}>
          <Notifications 
          displayDrawer={this.state.displayDrawer}
-        listNotifications={this.listNotifications}
+         listNotifications={this.state.listNotifications}
          handleDisplayDrawer= {this.handleDisplayDrawer}
-         handleHideDrawer= {this.handleHideDrawer}/>
+         handleHideDrawer= {this.handleHideDrawer}
+         markNotificationAsRead={this.markNotificationAsRead}/>
             <div >
             <Header/>
             
             
             <div className={css(styles.AppBody)}>
 
-                {this.isLogin === true ?
+                {!this.state.user.isLoggedIn ?
                 <BodySectionWithMarginBottom title={"Login to continue"}>
-                  <Login/>
+                  <Login login={this.logIn}/>
                 </BodySectionWithMarginBottom>: 
                 <BodySectionWithMarginBottom title={"Course List"}>
                   <CourseList listCourses={this.listCourses}/>
@@ -124,6 +161,8 @@ export class App extends Component {
             </div>
                 
       </div>
+      </AppContext.Provider>
+      </>
     )
   }
 }

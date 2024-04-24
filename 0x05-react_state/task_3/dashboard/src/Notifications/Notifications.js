@@ -1,101 +1,73 @@
-import React, { Component } from 'react';
-import NotificationItem from './NotificationItem';
+import React from 'react';
 import PropTypes from 'prop-types';
+import NotificationItem from './NotificationItem';
 import NotificationItemShape from './NotificationItemShape';
 import { StyleSheet, css } from 'aphrodite';
 
+const Notifications = ({
+  displayDrawer,
+  listNotifications,
+  handleDisplayDrawer,
+  handleHideDrawer,
+  markNotificationAsRead
+}) => {
+  const handleShow = () => {
+    handleDisplayDrawer();
+  };
 
-export class Notifications extends Component {
-  constructor(props) {
-    super(props);
+  const handleHide = () => {
+    handleHideDrawer();
+  };
 
-    this.state = {
-      isHovered: false
-
-    };
- 
- 
-    this.markAsRead = this.markAsRead.bind(this);
-    this.handleHide = this.handleHide.bind(this);
-    this.handleShow= this.handleShow.bind(this);
-   
-  }
-
-
-  handleShow = () => {
-    this.props.handleDisplayDrawer()
-    console.log("show")
-    console.log(this.props.displayDrawer)
-
-  }
-  handleHide = () => {
-    this.props.handleHideDrawer()
-    console.log("Hide")
-    console.log(this.props.displayDrawer)
-
-  }
-
- 
-
-
-  markAsRead(id) {
+  const markAsRead = (id) => {
     console.log(`Notification ${id} has been marked as read`);
-  }
+    markNotificationAsRead(id);
+  };
 
-  shouldComponentUpdate(nextProps) {
-    return nextProps.listNotifications.length > this.props.listNotifications.length;
-  }
+  return (
+    <>
+      <div className={css(styles.menuItem)}>
+        <p onClick={handleShow}>Your Notifications</p>
+      </div>
 
-  render() {
-    return (
-      <>
-       
-          <div className={css(styles.menuItem)}>
-            <p onClick={this.handleShow}>Your Notification</p>
-          </div>
-    
-  
-        {this.props.displayDrawer === true ? (
-          <div className={css(styles.Notifications)}>
-            <button
-              style={{
-                position: 'absolute',
-                top: 10,
-                right: 15,
-                color: 'black',
-                border: 'none',
-                borderRadius: '5px',
-                cursor: 'pointer',
-              }}
-              aria-label="Close"
-              onClick={this.handleHide}
-            >
-              X
-            </button>
-            {this.props.listNotifications.length !== 0 ? (
-              <p>Here is the list of notifications</p>
-            ) : null}
-  
-            <ul className={css(styles.ul)}>
-              {this.props.listNotifications.map((notify, Idx) => {
-                return (
-                  <NotificationItem
-                    key={notify.id}
-                    type={notify.type}
-                    value={notify.value}
-                    html={notify.html}
-                    id={notify.id}
-                    onMarkAsRead={this.markAsRead}
-                  />
-                );
-              })}
-            </ul>
-          </div>
-        ) : null}
-      </>
-    );
-  }
-}  
+      {displayDrawer && (
+        <div className={css(styles.Notifications)}>
+          <button
+            style={{
+              position: 'absolute',
+              top: 10,
+              right: 15,
+              color: 'black',
+              border: 'none',
+              borderRadius: '5px',
+              cursor: 'pointer',
+            }}
+            aria-label="Close"
+            onClick={handleHide}
+          >
+            X
+          </button>
+          {listNotifications.length !== 0 ? (
+            <p>Here is the list of notifications</p>
+          ) : null}
+
+          <ul className={css(styles.ul)}>
+            {listNotifications.map((notify) => (
+              <NotificationItem
+                key={notify.id}
+                type={notify.type}
+                value={notify.value}
+                html={notify.html}
+                id={notify.id}
+                onMarkAsRead={markAsRead}
+              />
+            ))}
+          </ul>
+        </div>
+      )}
+    </>
+  );
+};
 
 const opacityAnimation = {
   "0% ": {
@@ -113,8 +85,6 @@ const bounceAnimation = {
 };
 
 
-
-
 const styles = StyleSheet.create({
   Notifications: {
     border: '2px dashed red',
@@ -122,8 +92,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 6,
     padding: '4rem',
-    // margin: '1rem',
-    /* position: relative; */
     fontSize: 'var(--font-x-small)',
     "@media (max-width: 767px)" :{
      
@@ -132,8 +100,7 @@ const styles = StyleSheet.create({
        backgroundColor: "white",
        padding: "0",
        border: "none"
-      //  margin: ' 3rem 0',
-
+     
       
      }
   },
@@ -146,8 +113,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "column",
     gap:"2rem",
-   
-    // backgroundColor: "red"
 
     }
   },
@@ -168,10 +133,6 @@ const styles = StyleSheet.create({
     }
       
   },
-
- 
- 
-
 });
 
 
@@ -182,7 +143,10 @@ Notifications.propTypes = {
 
 Notifications.defaultProps = {
   displayDrawer: false,
-  listNotifications: [],
+  listNotifications: PropTypes.array.isRequired,
+  handleDisplayDrawer: PropTypes.func.isRequired,
+  handleHideDrawer: PropTypes.func.isRequired,
+  markNotificationAsRead: PropTypes.func.isRequired
 };
 
 export default Notifications;

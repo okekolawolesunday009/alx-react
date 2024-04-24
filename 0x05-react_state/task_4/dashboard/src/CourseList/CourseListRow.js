@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from "prop-types"
 import {  css } from 'aphrodite';
+import { useState } from 'react';
 
 
 const rowStyle = {
@@ -10,9 +11,17 @@ const rowStyle = {
   const headerStyle = {
     backgroundColor: "#deb5b545",
   };
+
+  const rowChecked = {
+    backgroundColor: "#e6e4e4"
+  }
 export default function CourseListRow({isHeader=false, textFirstCell, textSecondCell=null}) {
 
-
+   const [isChecked, setIsChecked] = useState(false);
+   
+   const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+  };
   
    if (isHeader){
 
@@ -20,7 +29,7 @@ export default function CourseListRow({isHeader=false, textFirstCell, textSecond
 
             return (
                 <tr style={rowStyle}> 
-                 
+                
                          <th style={headerStyle} colSpan={2}>{textFirstCell}</th>
                 </tr>
             )
@@ -37,8 +46,11 @@ export default function CourseListRow({isHeader=false, textFirstCell, textSecond
    
    } else {
    return (
-    <tr style={headerStyle}> 
-        <td>{textFirstCell}</td>
+    <tr style={isChecked ? rowChecked : headerStyle}>
+    <td>
+      <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />{textFirstCell}
+        {textFirstCell}
+        </td>
         <td>{textSecondCell}</td>
     </tr>
     );
