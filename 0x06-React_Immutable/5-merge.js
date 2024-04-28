@@ -1,4 +1,5 @@
-const { List, Map } = require('immutable');
+import {List, Map} from 'immutable';
+
 
 
 export const concatElements = (page1, page2) => {
