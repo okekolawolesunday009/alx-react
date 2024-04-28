@@ -1,5 +1,6 @@
 
-const {fromJs} = 'immutable'
+const {List} = 'immutable';
+
 export function getListObject(array) {
     return List(array);
 };
